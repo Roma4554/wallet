@@ -2,6 +2,19 @@ from typing import Union
 from datetime import datetime, date
 
 class Record:
+    """
+    Класс для представления записи.
+
+    Атрибуты:
+    category: str - категория (Доход/Расход);
+    value: Union[float, int] - значение суммы
+    description: str - описание записи
+    date_record: date - дата внесения записи (по умолчанию текущая дата)
+
+    Методы:
+    write_format(self) -> dict[str:str] - возращает атрибуты в виде словаря для записи в формате .json
+
+    """
 
     def __init__(self,
                  category: str,
@@ -17,7 +30,10 @@ class Record:
     def __str__(self):
         return f"Дата {self.date}\nКатегория: {self.category}\nСумма: {self.value_sum}\nОписание: {self.description}\n"
 
-    def write_format(self) -> list:
+    def write_format(self) -> dict[str:str]:
+        """
+        Метод возращает атрибуты класса в виде словаря для записи в формате .json
+        """
         return dict(Дата=str(self.date),Категория=self.category,Сумма=str(self.value_sum),Описание=self.description)
 
     @classmethod

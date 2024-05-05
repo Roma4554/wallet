@@ -6,11 +6,14 @@ from Wallet import Wallet
 from Record import Record
 
 def check(wallet: Wallet) -> bool:
+    """Функция получает на вход кошелек и возращает истину если в нем содержится хоть одна запись"""
     if wallet.count_records == 0:
         print('Упс, кажется пусто :(\n')
         sleep(0.7)
         return True
+
 def show_balance(wallet: Wallet) -> None:
+    """Функция для вывода общего баланса кошелька и баланса по статьям """
     choice = input('Пожалуйста, выберите необходимый баланс:\n' \
                    '1 - Текущий баланс\n' \
                    '2 - Доходы\n' \
@@ -27,8 +30,10 @@ def show_balance(wallet: Wallet) -> None:
             return
 
 def new_records(wallet: Wallet) -> None:
+    """Функция для внесение новой записи"""
 
     def record_write(category: str) -> None:
+        """Функция для получения необходиой информации о внасимой записи"""
         while True:
             try:
                 sum = float(input('Введите сумму:\n'))
@@ -51,11 +56,13 @@ def new_records(wallet: Wallet) -> None:
             record_write('Расход')
 
 def find_record(wallet: Wallet) -> None:
+    """Функция позволяющая осуществлять поиск по записям: по категории, дате или сумме"""
 
     if check(wallet):
         return
 
     def sort_records_category() -> None:
+        """Функция для поиска запесей по категории"""
         choice = input('Выберети категорию:\n' \
                        '1 - Доходы\n' \
                        '2 - Расходы\n'
@@ -73,6 +80,7 @@ def find_record(wallet: Wallet) -> None:
                 print(record)
 
     def sort_record_date() -> None:
+        """Функция для поиска запесей по дате"""
         pattern = r'\b(?:[12]\d{3})\-(?:0[1-9]|1[012])\-(?:0[1-9]|[12]\d|3[01])\b'
         print('Введите дату в формате ГГГГ-ММ-ДД')
         while True:
@@ -89,6 +97,7 @@ def find_record(wallet: Wallet) -> None:
                 return
 
     def sort_record_sum() -> None:
+        """Функция для поиска запесей по сумме"""
         choice = input('Выберети тип поиска по сумме:\n' \
                        '1 - Больше указанной суммы\n' \
                        '2 - Меньше указанной суммы\n' \
@@ -132,6 +141,7 @@ def find_record(wallet: Wallet) -> None:
             return
 
 def change_record(wallet: Wallet) -> None:
+    """Функция позволяющая изменять выбранную запись в кошельке"""
     if check(wallet):
         return
 
@@ -150,6 +160,7 @@ def change_record(wallet: Wallet) -> None:
                       '5 - Выйти в главное меню\n')
 
         def set_date() -> None:
+            """Функция для изменения даты записи"""
             while True:
                 value = input('Введите новую дату в формате ГГГГ-ММ-ДД:\n')
                 try:
@@ -160,9 +171,8 @@ def change_record(wallet: Wallet) -> None:
                 except:
                     print('Неверный формат даты!\n')
 
-
-
         def set_category() -> None:
+            """Функция для изменения категории записи"""
             value = "Доход" if record.category == "Расход" else "Расход"
 
             match value:
@@ -179,6 +189,7 @@ def change_record(wallet: Wallet) -> None:
             print('Категория успешно изменена!')
 
         def set_sum() -> None:
+            """Функция для изменения суммы записи"""
             while True:
                 try:
                     value = float(input('Введите новое значение суммы\n'))
@@ -196,6 +207,7 @@ def change_record(wallet: Wallet) -> None:
             record.value_sum = value
 
         def set_description() -> None:
+            """Функция для изменения описания записи"""
             value = input('Введите новое описание\n')
             record.description = value
 

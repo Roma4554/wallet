@@ -1,13 +1,15 @@
 import json, os
-
+import typing
 from datetime import datetime
+from typing import Iterable
 
 from Record import Record
 
 
 def new_wallet(name:str) -> int:
     """
-    Создание .json файла для нового кошелька
+    Функция проверяет наличие кошелька с указанным имененм,
+    в случае отсутсвия создает .json хранилище для нового кошелька
     """
     file_name = f'{name}.json'
     if os.path.exists(file_name):
@@ -27,6 +29,7 @@ def new_wallet(name:str) -> int:
         return (0, 0)
 
 def add_record(name:str, record: Record) -> None:
+    """Функция для внесения новой записи в .json файл"""
     file_name = f'{name}.json'
     with open(file_name, mode='r', encoding='utf-8') as json_file:
         data = json.load(json_file)
@@ -35,6 +38,7 @@ def add_record(name:str, record: Record) -> None:
         json.dump(data, json_file, ensure_ascii=False, indent=4)
 
 def add_records_list(name:str, records_list: list[Record]) -> None:
+    """Функция для внесения полученного списка в .json файл"""
     file_name = f'{name}.json'
     with open(file_name, mode='r', encoding='utf-8') as json_file:
         data = json.load(json_file)
@@ -43,7 +47,8 @@ def add_records_list(name:str, records_list: list[Record]) -> None:
     with open(file_name, mode='w', encoding='utf-8') as json_file:
         json.dump(data, json_file, ensure_ascii=False, indent=4)
 
-def read_records(name:str) -> Record:
+def read_records(name:str) -> Iterable[Record]:
+    """Функция итератор для полусения записей из хранилиша"""
     file_name = f'{name}.json'
     with open(file_name, mode='r', encoding='utf-8') as json_file:
         data = json.load(json_file)
@@ -52,13 +57,9 @@ def read_records(name:str) -> Record:
                          datetime.fromisoformat(string['Дата']).date())
 
 def get_records_list(name:str) -> list[Record]:
+    """Функция возвращает список запесей из хранилиша"""
     file_name = f'{name}.json'
     with open(file_name, mode='r', encoding='utf-8') as json_file:
         data = json.load(json_file)
     return [Record(string['Категория'],float(string['Сумма']),string['Описание'],
                          datetime.fromisoformat(string['Дата']).date()) for string in data["records"]]
-
-
-# a = new_wallet('wallet')
-# rec = Record("Расход", 350, 'Купил шаурму')
-# add_record('wallet', rec)

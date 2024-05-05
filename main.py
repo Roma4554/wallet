@@ -1,17 +1,8 @@
-import csv_function
-
-from Record import Record
 from Wallet import Wallet
 from function import show_balance, new_records, find_record, change_record
 
 if __name__ == "__main__":
       wallet_name = input('Введите название кошелька:\n')
-      # while True:
-      #     try:
-      #         balance = float(input('Введите баланс на вашем кошельке:\n'))
-      #         break
-      #     except:
-      #         print('Пожалуйста введите чиcло')
 
       wallet = Wallet(wallet_name)
 
