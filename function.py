@@ -6,7 +6,7 @@ from Wallet import Wallet
 from Record import Record
 
 def check(wallet: Wallet) -> bool:
-    """Функция получает на вход кошелек и возращает истину если в нем содержится хоть одна запись"""
+    """Функция получает на вход кошелек и возращает истину если в нем не содержится записей"""
     if wallet.count_records == 0:
         print('Упс, кажется пусто :(\n')
         sleep(0.7)
@@ -40,8 +40,8 @@ def new_records(wallet: Wallet) -> None:
                 description = input('Введите описание:\n')
                 record = Record(category, sum, description)
                 break
-            except ValueError:
-                print('Пожалуйста введите корректные данные')
+            except ValueError as ex:
+                print(ex)
             except TypeError:
                 print('Упс, что-то пошло не так попробуйте еще раз')
         wallet.add(record)

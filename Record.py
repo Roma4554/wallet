@@ -51,7 +51,7 @@ class Record:
         if not (isinstance(value, float) or isinstance(value, int)):
             raise TypeError("Значение должно быть типа float или int.")
         if value < 0:
-            raise ValueError("Значение должно быть положительным")
+            raise ValueError("Сумма должна быть положительной!")
 
     @classmethod
     def __verify_description(cls, description: str) -> None:
