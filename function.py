@@ -16,10 +16,10 @@ def check(wallet: Wallet) -> bool:
 
 def show_balance(wallet: Wallet) -> None:
     """Функция для вывода общего баланса кошелька и баланса по статьям """
-    choice = input("Пожалуйста, выберите необходимый баланс:\n" \
-                   "1 - Текущий баланс\n" \
-                   "2 - Доходы\n" \
-                   "3 - Расходы\n" \
+    choice = input("Пожалуйста, выберите необходимый баланс:\n"
+                   "1 - Текущий баланс\n"
+                   "2 - Доходы\n"
+                   "3 - Расходы\n"
                    "4 - Выйти в главное меню\n")
     match choice:
         case '1':
@@ -49,8 +49,8 @@ def new_records(wallet: Wallet) -> None:
                 print('Упс, что-то пошло не так попробуйте еще раз')
         wallet.add(record)
 
-    choice = input('Пожалуйста, выберите категорию:\n' \
-                   '1 - Доходы\n' \
+    choice = input('Пожалуйста, выберите категорию:\n'
+                   '1 - Доходы\n'
                    '2 - Расходы\n')
     match choice:
         case '1':
@@ -67,8 +67,8 @@ def find_record(wallet: Wallet) -> None:
 
     def sort_records_category() -> None:
         """Функция для поиска записей по категории"""
-        choice = input('Выберети категорию:\n' \
-                       '1 - Доходы\n' \
+        choice = input('Выберете категорию:\n'
+                       '1 - Доходы\n'
                        '2 - Расходы\n'
                        '3 - Выйти в главное меню\n')
         match choice:
@@ -92,7 +92,7 @@ def find_record(wallet: Wallet) -> None:
             if choice == 'exit':
                 return
             elif not search(pattern, choice):
-                print('Дата должна быть в формате ГГГГ-ММ-ДД. ' \
+                print('Дата должна быть в формате ГГГГ-ММ-ДД. '
                       'Попробуйте еще раз или введите exit для выхода\n')
             else:
                 for record in wallet.get_records():
@@ -102,9 +102,9 @@ def find_record(wallet: Wallet) -> None:
 
     def sort_record_sum() -> None:
         """Функция для поиска записей по сумме"""
-        choice = input('Выберете тип поиска по сумме:\n' \
-                       '1 - Больше указанной суммы\n' \
-                       '2 - Меньше указанной суммы\n' \
+        choice = input('Выберете тип поиска по сумме:\n'
+                       '1 - Больше указанной суммы\n'
+                       '2 - Меньше указанной суммы\n'
                        '3 - Равно указанной сумме\n')
 
         while True:
@@ -129,9 +129,9 @@ def find_record(wallet: Wallet) -> None:
                     if record.value_sum == value_sum:
                         print(record)
 
-    choice = input('Выберете тип поиска:\n' \
-                   '1 - по категории\n' \
-                   '2 - по дате\n' \
+    choice = input('Выберете тип поиска:\n'
+                   '1 - по категории\n'
+                   '2 - по дате\n'
                    '3 - по сумме\n'
                    '4 - Выйти в главное меню\n')
     match choice:
@@ -154,14 +154,14 @@ def change_record(wallet: Wallet) -> None:
     if num_record.isdigit() and 0 < int(num_record) <= wallet.count_records:
         records = wallet.get_records_list()
         record = records[int(num_record) - 1]
-        print('Выбранная запись:\n' \
+        print('Выбранная запись:\n'
               f'{record}')
 
-        choice = input('Что необходимо отредактировать?\n' \
-                       '1 - Дата\n' \
-                       '2 - Категория\n' \
-                       '3 - Сумма\n' \
-                       '4 - Описание\n' \
+        choice = input('Что необходимо отредактировать?\n'
+                       '1 - Дата\n'
+                       '2 - Категория\n'
+                       '3 - Сумма\n'
+                       '4 - Описание\n'
                        '5 - Выйти в главное меню\n')
 
         def set_date() -> None:
