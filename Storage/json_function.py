@@ -3,31 +3,7 @@ import os
 from datetime import datetime
 from typing import Iterable
 
-from Record import Record
-
-
-def new_wallet(name: str) -> tuple[int, int]:
-    """
-    Функция проверяет наличие кошелька с указанным именем,
-    в случае отсутствия создает .json хранилище для нового кошелька
-    """
-    file_name = f'{name}.json'
-    if os.path.exists(file_name):
-        with open(file_name, mode='r', encoding='utf-8') as json_file:
-            data = json.load(json_file)
-        income = 0
-        expenses = 0
-        for record in data['records']:
-            if record["Категория"] == 'Доход':
-                income += float(record["Сумма"])
-            else:
-                expenses += float(record["Сумма"])
-        return len(data['records']), income - expenses
-    else:
-        with open(file_name, mode='w', encoding='utf-8') as json_file:
-            json.dump({"records": list()}, json_file, ensure_ascii=False, indent=4)
-        return 0, 0
-
+from wallet.Record import Record
 
 def add_record(name: str, record: Record) -> None:
     """Функция для внесения новой записи в .json файл"""
@@ -67,3 +43,33 @@ def get_records_list(name: str) -> list[Record]:
         data = json.load(json_file)
     return [Record(string['Категория'], float(string['Сумма']), string['Описание'],
                    datetime.fromisoformat(string['Дата']).date()) for string in data["records"]]
+
+
+
+def new_wallet(name: str) -> tuple[int, int]:
+    """
+    Функция проверяет наличие кошелька с указанным именем,
+    в случае отсутствия создает .json хранилище для нового кошелька
+    """
+    file_name = f'{name}.json'
+    if os.path.exists(file_name):
+        records = get_records_list(name)
+        income = 0
+        expenses = 0
+        for record in records:
+            if record.category == 'Доход':
+                income += float(record.value_sum)
+            else:
+                expenses += float(record.value_sum)
+        return len(records), income - expenses
+    else:
+        with open(file_name, mode='w', encoding='utf-8') as json_file:
+            json.dump({"records": list()}, json_file, ensure_ascii=False, indent=4)
+        return 0, 0
+
+
+# lenght, value_sum = new_wallet('wallet')
+# rec = Record("Расход", 1100, 'Steam')
+# add_record("wallet", rec)
+# get_records_list('wallet')
+# print()

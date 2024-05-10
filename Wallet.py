@@ -1,7 +1,7 @@
 from typing import Iterable
 
-from Record import Record
-from json_function import new_wallet, add_record, read_records, get_records_list, add_records_list
+from wallet.Record import Record
+from wallet.Storage.json_function import new_wallet, add_record, read_records, get_records_list, add_records_list
 
 
 class Wallet:
@@ -33,7 +33,7 @@ class Wallet:
         if isinstance(record, Record):
             if record.category == 'Расход':
                 if record.value_sum > self.__balance:
-                    print("На счету недостаточно средств!\n")
+                    raise OverflowError("На счету недостаточно средств!\n")
                     return
                 else:
                     self.__balance -= record.value_sum
