@@ -1,6 +1,7 @@
 from typing import Union
 from datetime import datetime, date
 
+
 class Record:
     """
     Класс для представления записи.
@@ -12,7 +13,7 @@ class Record:
     date_record: date - дата внесения записи (по умолчанию текущая дата)
 
     Методы:
-    write_format(self) -> dict[str:str] - возращает атрибуты в виде словаря для записи в формате .json
+    write_format(self) -> dict[str:str] - возвращает атрибуты в виде словаря для записи в формате .json
 
     """
 
@@ -32,9 +33,9 @@ class Record:
 
     def write_format(self) -> dict[str:str]:
         """
-        Метод возращает атрибуты класса в виде словаря для записи в формате .json
+        Метод возвращает атрибуты класса в виде словаря для записи в формате .json
         """
-        return dict(Дата=str(self.date),Категория=self.category,Сумма=str(self.value_sum),Описание=self.description)
+        return dict(Дата=str(self.date), Категория=self.category, Сумма=str(self.value_sum), Описание=self.description)
 
     @classmethod
     def __verify_date(cls, date_record: date) -> None:

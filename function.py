@@ -5,20 +5,22 @@ from time import sleep
 from Wallet import Wallet
 from Record import Record
 
+
 def check(wallet: Wallet) -> bool:
-    """Функция получает на вход кошелек и возращает истину если в нем не содержится записей"""
+    """Функция получает на вход кошелек и возвращает истину если в нем не содержится записей"""
     if wallet.count_records == 0:
         print('Упс, кажется пусто :(\n')
         sleep(0.7)
         return True
 
+
 def show_balance(wallet: Wallet) -> None:
     """Функция для вывода общего баланса кошелька и баланса по статьям """
-    choice = input('Пожалуйста, выберите необходимый баланс:\n' \
-                   '1 - Текущий баланс\n' \
-                   '2 - Доходы\n' \
-                   '3 - Расходы\n' \
-                   '4 - Выйти в главное меню\n')
+    choice = input("Пожалуйста, выберите необходимый баланс:\n" \
+                   "1 - Текущий баланс\n" \
+                   "2 - Доходы\n" \
+                   "3 - Расходы\n" \
+                   "4 - Выйти в главное меню\n")
     match choice:
         case '1':
             print(f'Текущий баланс: {wallet.balance}\n')
@@ -29,8 +31,9 @@ def show_balance(wallet: Wallet) -> None:
         case '4':
             return
 
+
 def new_records(wallet: Wallet) -> None:
-    """Функция для внесение новой записи"""
+    """Функция для внесения новой записи"""
 
     def record_write(category: str) -> None:
         """Функция для получения необходиой информации о внасимой записи"""
@@ -55,6 +58,7 @@ def new_records(wallet: Wallet) -> None:
         case '2':
             record_write('Расход')
 
+
 def find_record(wallet: Wallet) -> None:
     """Функция позволяющая осуществлять поиск по записям: по категории, дате или сумме"""
 
@@ -62,7 +66,7 @@ def find_record(wallet: Wallet) -> None:
         return
 
     def sort_records_category() -> None:
-        """Функция для поиска запесей по категории"""
+        """Функция для поиска записей по категории"""
         choice = input('Выберети категорию:\n' \
                        '1 - Доходы\n' \
                        '2 - Расходы\n'
@@ -80,7 +84,7 @@ def find_record(wallet: Wallet) -> None:
                 print(record)
 
     def sort_record_date() -> None:
-        """Функция для поиска запесей по дате"""
+        """Функция для поиска записей по дате"""
         pattern = r'\b(?:[12]\d{3})\-(?:0[1-9]|1[012])\-(?:0[1-9]|[12]\d|3[01])\b'
         print('Введите дату в формате ГГГГ-ММ-ДД')
         while True:
@@ -97,8 +101,8 @@ def find_record(wallet: Wallet) -> None:
                 return
 
     def sort_record_sum() -> None:
-        """Функция для поиска запесей по сумме"""
-        choice = input('Выберети тип поиска по сумме:\n' \
+        """Функция для поиска записей по сумме"""
+        choice = input('Выберете тип поиска по сумме:\n' \
                        '1 - Больше указанной суммы\n' \
                        '2 - Меньше указанной суммы\n' \
                        '3 - Равно указанной сумме\n')
@@ -140,6 +144,7 @@ def find_record(wallet: Wallet) -> None:
         case '4':
             return
 
+
 def change_record(wallet: Wallet) -> None:
     """Функция позволяющая изменять выбранную запись в кошельке"""
     if check(wallet):
@@ -153,11 +158,11 @@ def change_record(wallet: Wallet) -> None:
               f'{record}')
 
         choice = input('Что необходимо отредактировать?\n' \
-                      '1 - Дата\n' \
-                      '2 - Категория\n' \
-                      '3 - Сумма\n' \
-                      '4 - Описание\n' \
-                      '5 - Выйти в главное меню\n')
+                       '1 - Дата\n' \
+                       '2 - Категория\n' \
+                       '3 - Сумма\n' \
+                       '4 - Описание\n' \
+                       '5 - Выйти в главное меню\n')
 
         def set_date() -> None:
             """Функция для изменения даты записи"""
@@ -229,4 +234,4 @@ def change_record(wallet: Wallet) -> None:
         wallet.add_list(records)
 
     else:
-        print('Введеные данные некорректны!\n')
+        print('Введенные данные некорректны!\n')

@@ -1,7 +1,8 @@
-from typing import Union, Iterable
+from typing import Iterable
 
 from Record import Record
 from json_function import new_wallet, add_record, read_records, get_records_list, add_records_list
+
 
 class Wallet:
     """
@@ -13,13 +14,14 @@ class Wallet:
     balance: Union[int, float] - баланс кошелька.
 
     Методы:
-    add(self, record: Record) -> None - метод для добавления записи в .json, с учеом изменения баланса
+    add(self, record: Record) -> None - метод для добавления записи в .json, с учетом изменения баланса
     add_list(self, list_records: list[Record]) -> None - метод для добавления списка записей в .json файл
     count(self, category: str) -> int: - метод для подсчета суммы по указанной категории
     get_records(self) -> Iterable[Record] - метод возвращает итератор с перечнем записей
     get_records_list(self) -> list[Record] - метод возвращает список с записями из .json файла
 
     """
+
     def __init__(self,
                  name: str) -> None:
         self.__count_records, self.balance = new_wallet(name)
@@ -27,7 +29,7 @@ class Wallet:
 
     def add(self,
             record: Record) -> None:
-        """Метод для добавления записи в .json, с учеом изменения баланса"""
+        """Метод для добавления записи в .json, с учетом изменения баланса"""
         if isinstance(record, Record):
             if record.category == 'Расход':
                 if record.value_sum > self.__balance:
@@ -46,7 +48,6 @@ class Wallet:
     def add_list(self, list_records: list[Record]) -> None:
         """Метод для добавления списка записей в .json файл"""
         add_records_list(self.__wallet_name, list_records)
-
 
     def count(self, category: str) -> int:
         """Метод для подсчета суммы по указанной категории"""

@@ -1,15 +1,15 @@
-import json, os
-import typing
+import json
+import os
 from datetime import datetime
 from typing import Iterable
 
 from Record import Record
 
 
-def new_wallet(name:str) -> int:
+def new_wallet(name: str) -> tuple[int, int]:
     """
-    Функция проверяет наличие кошелька с указанным имененм,
-    в случае отсутсвия создает .json хранилище для нового кошелька
+    Функция проверяет наличие кошелька с указанным именем,
+    в случае отсутствия создает .json хранилище для нового кошелька
     """
     file_name = f'{name}.json'
     if os.path.exists(file_name):
@@ -22,13 +22,14 @@ def new_wallet(name:str) -> int:
                 income += float(record["Сумма"])
             else:
                 expenses += float(record["Сумма"])
-        return (len(data['records']), income - expenses)
+        return len(data['records']), income - expenses
     else:
         with open(file_name, mode='w', encoding='utf-8') as json_file:
-            json.dump({"records":list()}, json_file, ensure_ascii=False, indent=4)
-        return (0, 0)
+            json.dump({"records": list()}, json_file, ensure_ascii=False, indent=4)
+        return 0, 0
 
-def add_record(name:str, record: Record) -> None:
+
+def add_record(name: str, record: Record) -> None:
     """Функция для внесения новой записи в .json файл"""
     file_name = f'{name}.json'
     with open(file_name, mode='r', encoding='utf-8') as json_file:
@@ -37,7 +38,8 @@ def add_record(name:str, record: Record) -> None:
     with open(file_name, mode='w', encoding='utf-8') as json_file:
         json.dump(data, json_file, ensure_ascii=False, indent=4)
 
-def add_records_list(name:str, records_list: list[Record]) -> None:
+
+def add_records_list(name: str, records_list: list[Record]) -> None:
     """Функция для внесения полученного списка в .json файл"""
     file_name = f'{name}.json'
     with open(file_name, mode='r', encoding='utf-8') as json_file:
@@ -47,19 +49,21 @@ def add_records_list(name:str, records_list: list[Record]) -> None:
     with open(file_name, mode='w', encoding='utf-8') as json_file:
         json.dump(data, json_file, ensure_ascii=False, indent=4)
 
-def read_records(name:str) -> Iterable[Record]:
-    """Функция итератор для полусения записей из хранилиша"""
+
+def read_records(name: str) -> Iterable[Record]:
+    """Функция итератор для получения записей из хранилища"""
     file_name = f'{name}.json'
     with open(file_name, mode='r', encoding='utf-8') as json_file:
         data = json.load(json_file)
         for string in data["records"]:
-            yield Record(string['Категория'],float(string['Сумма']),string['Описание'],
+            yield Record(string['Категория'], float(string['Сумма']), string['Описание'],
                          datetime.fromisoformat(string['Дата']).date())
 
-def get_records_list(name:str) -> list[Record]:
-    """Функция возвращает список запесей из хранилиша"""
+
+def get_records_list(name: str) -> list[Record]:
+    """Функция возвращает список запесей из хранилища"""
     file_name = f'{name}.json'
     with open(file_name, mode='r', encoding='utf-8') as json_file:
         data = json.load(json_file)
-    return [Record(string['Категория'],float(string['Сумма']),string['Описание'],
-                         datetime.fromisoformat(string['Дата']).date()) for string in data["records"]]
+    return [Record(string['Категория'], float(string['Сумма']), string['Описание'],
+                   datetime.fromisoformat(string['Дата']).date()) for string in data["records"]]
